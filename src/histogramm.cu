@@ -80,9 +80,9 @@ int main(void)
 
     unsigned int* histo;
     histo  = (unsigned int*)malloc(sizeof(unsigned int)* buf_size);
-    cudaMemcpy(histo, dev_histo, sizeof(unsigned int)*buf_size, 
-                                    cudaMemcpyDeviceToHost);
-    //getBufferData(gdata->VBO, histo, buf_size);
+    //cudaMemcpy(histo, dev_histo, sizeof(unsigned int)*buf_size, 
+   //                                 cudaMemcpyDeviceToHost);
+    getBufferData(gdata->VBO, histo, buf_size);
     puts("Histogramm data:");
     for (auto i = 0u; i < buf_size; i++)
         printf("%d\t", histo[i]);

@@ -49,7 +49,7 @@ void renderGL(GraphicsData& gd)
         // draw
         gd.shaderMain.useProgram();
         glBindVertexArray(gd.VAO);
-        glDrawArrays(GL_LINES, 0, buf_size);
+        glDrawArrays(GL_POINTS, 0, buf_size);
         glBindVertexArray(0);
 
         // swap buffers
