@@ -139,7 +139,7 @@ size_t readFromFile(unsigned char** buff, const char* filename)
 double calculate_entropy(unsigned int histo*, double file_size)
 {
 	double ent = 0.0;
-	for (int i = 0; i < 0x100; i++) {
+	for (int i = 0; i < buf_size; i++) {    // buf_size = 0x100
 		if (histo[i] > 0) {
 			double val = static_cast<double>(histo[i]) / file_size;
 			ent += (val * std::log2(val));
