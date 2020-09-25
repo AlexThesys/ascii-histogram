@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cstring>
 #include <memory>
+#include <cmath>
 #include "../include/renderer.h"
 #include "cuda.h"
 #include "cuda_gl_interop.h"
@@ -28,6 +29,7 @@ __global__ void histo_kernel(unsigned char* buffer,
 }
 
 size_t readFromFile(unsigned char**, const char*);
+double calculate_entropy(unsigned int* histo, double file_size);
 
 template <typename T>
 static void getBufferData(const GLuint Buf, T* buffer, const size_t size);
@@ -87,6 +89,10 @@ int main(void)
     for (auto i = 0u; i < buf_size; i++)
         printf("%d\t", histo[i]);
     puts("--------------");
+
+    double ent = calculate_entropy(histo, static_cast<double>(size));
+    printf("File entropy:\t%.4f", ent);
+
     free(histo);
 
     renderGL(*gdata);
@@ -128,6 +134,19 @@ size_t readFromFile(unsigned char** buff, const char* filename)
     fclose(file);
 
     return sz;
+}
+
+double calculate_entropy(unsigned int histo*, double file_size)
+{
+	double ent = 0.0;
+	for (int i = 0; i < 0x100; i++) {
+		if (histo[i] > 0) {
+			double val = static_cast<double>(histo[i]) / file_size;
+			ent += (val * std::log2(val));
+		}
+	}
+
+	return -ent;
 }
 
 template <typename T>
